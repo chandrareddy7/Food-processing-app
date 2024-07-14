@@ -1,1 +1,1 @@
-[Database design](images/image.png)
+[Database design](./image.png)
