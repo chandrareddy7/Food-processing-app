@@ -3,8 +3,9 @@ import vendor from "../models/vendorModel.js";
 
 const vendorRoute = Router();
 
-vendorRoute.get("/", (req, res) => {
-  res.status(200).send("All vendors data");
+vendorRoute.get("/", async (req, res) => {
+  const vendors = await vendor.find({});
+  res.status(200).send({ vendors });
 });
 
 vendorRoute.post("/signup", async (req, res) => {
@@ -20,6 +21,15 @@ vendorRoute.post("/signup", async (req, res) => {
     .save()
     .then((user) => res.status(201).send("Vendor created"))
     .catch((err) => res.status(400).json("Error! " + err));
+});
+
+vendorRoute.post("/signin", async (req, res) => {
+  const creds = { ...req.body };
+  console.log(await vendor.find({email: creds.email, password: creds.password}));
+  const isValid = await vendor
+    .find({ creds })
+    .then((vendorData) => res.status(200).json({ vendor: vendorData }))
+    .catch((err) => res.status(401).json({ message: "Wrong credentials." }));
 });
 
 export default vendorRoute;
