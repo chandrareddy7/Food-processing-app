@@ -1,5 +1,5 @@
 import { Router } from "express";
-import vendor from "../models/vendorModel.js";
+import { vendor } from "../models/models.js";
 
 const vendorRoute = Router();
 
@@ -25,7 +25,9 @@ vendorRoute.post("/signup", async (req, res) => {
 
 vendorRoute.post("/signin", async (req, res) => {
   const creds = { ...req.body };
-  console.log(await vendor.find({email: creds.email, password: creds.password}));
+  console.log(
+    await vendor.find({ email: creds.email, password: creds.password })
+  );
   const isValid = await vendor
     .find({ creds })
     .then((vendorData) => res.status(200).json({ vendor: vendorData }))

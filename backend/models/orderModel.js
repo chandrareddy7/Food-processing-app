@@ -1,13 +1,15 @@
-import mongoose from "mongoose";
+import { mongoose, Schema } from "mongoose";
 
 const orderSchema = new mongoose.Schema({
   userId: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: "user",
   },
   vendorId: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: "vendor",
   },
 });
 

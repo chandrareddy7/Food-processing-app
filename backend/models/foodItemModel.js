@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import {mongoose, Schema} from "mongoose";
 
 const foodItemSchema = new mongoose.Schema({
   name: {
@@ -10,8 +10,8 @@ const foodItemSchema = new mongoose.Schema({
     required: true,
   },
   vendorId: {
-    type: ObjectId,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "vendor",
   },
 });
 
