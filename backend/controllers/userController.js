@@ -1,5 +1,14 @@
+import { User } from "../models/models.js";
+
 const viewCart = (req, res) => {
-  res.send("User cart details sent");
+  try {
+    const cartItems = User.find({});
+    return res.status(200).json({ cartItems });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Error fetching cart items of user!", error: error });
+  }
 };
 
 const addToCart = (req, res) => {

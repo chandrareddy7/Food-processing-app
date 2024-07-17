@@ -1,5 +1,5 @@
 import foodItem from "./foodItemModel.js";
 import order from "./orderModel.js";
-import user from "./userModel.js"; 
+import User from "./userModel.js"; 
 
-export {foodItem, order, user}
+export {foodItem, order, User}

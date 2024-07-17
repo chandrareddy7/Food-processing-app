@@ -1,5 +1,4 @@
 import express from "express";
-import checkRole from "../middleware/checkRole.js";
 import {
   addFoodItem,
   deleteFoodItem,

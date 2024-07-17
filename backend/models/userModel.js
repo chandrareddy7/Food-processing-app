@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const cartItemSchema = new mongoose.Schema({
   foodItemId: {
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   cart: {
     items: [cartItemSchema],
-  }
+  },
 });
 
 const User = mongoose.model("User", userSchema);
