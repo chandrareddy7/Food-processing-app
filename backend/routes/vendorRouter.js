@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.post("/food-items", addFoodItem);
+router.post("/fooditems", addFoodItem);
 router.delete("/food-items/:id", deleteFoodItem);
 router.get("/orders", viewOrders);
 router.put("/orders/:id", updateOrderStatus);

@@ -31,9 +31,7 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "vendor"],
     required: true,
   },
-  cart: {
-    items: [cartItemSchema],
-  },
+  cart: [cartItemSchema],
 });
 
 const User = mongoose.model("User", userSchema);
