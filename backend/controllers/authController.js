@@ -22,8 +22,6 @@ const signinUser = async (req, res) => {
       email,
       password,
     });
-    console.log(email, password);
-    console.log(user);
     if (user.length > 0) {
       return res.status(200).json({ message: "Login successfull" });
     } else {
