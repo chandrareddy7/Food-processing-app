@@ -6,6 +6,11 @@ const orderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  vendorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   items: [
     {
       foodItemId: {
@@ -20,7 +25,7 @@ const orderSchema = new mongoose.Schema({
       price: {
         type: Number,
         required: true,
-      },
+      }
     },
   ],
   status: {

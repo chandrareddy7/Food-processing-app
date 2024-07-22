@@ -1,11 +1,10 @@
-import { foodItem } from "../models/models.js";
+import { Order, foodItem } from "../models/models.js";
 
 const addFoodItem = async (req, res) => {
   const newfoodItem = new foodItem({ ...req.body });
   try {
-    await newfoodItem
-      .save()
-      .then(() => res.status(200).json({ message: "Food item saved" }));
+    await newfoodItem.save();
+    return res.status(200).json({ message: "Food item saved" });
   } catch (error) {
     res
       .status(400)
@@ -34,12 +33,36 @@ const deleteFoodItem = async (req, res) => {
   }
 };
 
-const viewOrders = (req, res) => {
-  res.send("All orders placed by users to you");
+const viewOrders = async (req, res) => {
+  try {
+    const id = req.body.id;
+    const vendorOrders = await Order.find({ vendorId: id });
+    return res.status(200).json({
+      message: "Vendor orders fetched successfully",
+      orders: vendorOrders,
+    });
+  } catch (error) {
+    return res.status(400).json({ message: "Failed to fetch orders." });
+  }
 };
 
-const updateOrderStatus = (req, res) => {
-  res.send("Updated order status ");
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { id, orderId, status } = { ...req.body };
+    const vendorOrders = await Order.findOneAndUpdate(
+      { vendorId: id, orderId: orderId },
+      { status: status },
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json({
+      message: "order updated successfully",
+      orders: vendorOrders,
+    });
+  } catch (error) {
+    return res.status(400).json({ message: "Failed to update orders." });
+  }
 };
 
 export { addFoodItem, deleteFoodItem, viewOrders, updateOrderStatus };

@@ -1,4 +1,4 @@
-import { User, order } from "../models/models.js";
+import { User, Order } from "../models/models.js";
 
 const viewCart = async (req, res) => {
   try {
@@ -18,36 +18,57 @@ const viewCart = async (req, res) => {
 
 const addToCart = async (req, res) => {
   try {
-    const { id, newItemId, quantity, price } = { ...req.body };
-    const user = await User.findOne({ _id: id });
-    if (user === null || user.length == 0) {
+    const { id, vendorId, foodItem, quantity, price } = req.body;
+    let user = await User.findOne({ _id: id });
+    if (!user) {
       return res.status(400).json({ message: "user doesn't exist" });
     }
     const cartItems = user.cart;
-    const itemIndex = cartItems.findIndex(
-      (item) => item.foodItemId === newItemId
-    );
+    const itemIndex = cartItems.findIndex((item) => {
+      return item.foodItemId.equals(foodItem);
+    });
+    if (cartItems.length != 0) {
+      if (cartItems[0].vendorId != vendorId) {
+        return res.status(400).json({
+          message:
+            "Please add items from the same vendor to your cart, or clear your cart before adding items from a new vendor.",
+        });
+      }
+    }
     let newCartItems;
-    if (itemIndex == -1) {
-      newCartItems = [
-        ...cartItems,
-        { foodItemId: newItemId, quantity: quantity, price: price },
-      ];
-    } else {
+    if (itemIndex === -1) {
+      if (quantity < 0) {
+        return res.status(400).json({
+          message: "Cannot remove an item which is not added to cart before.",
+        });
+      }
       newCartItems = [
         ...cartItems,
         {
-          foodItemId: cartItems[itemIndex].foodItemId,
-          quantity: cartItems[itemIndex].quantity + quantity,
+          foodItemId: foodItem,
+          quantity: quantity,
           price: price,
+          vendorId: vendorId,
         },
       ];
+    } else {
+      if (quantity < 0 && cartItems[itemIndex].quantity < Math.abs(quantity)) {
+        return res.status(400).json({
+          message: "Cannot remove more items than present in the cart.",
+        });
+      }
+      newCartItems = [...cartItems];
+      newCartItems[itemIndex].quantity += quantity;
+      if (newCartItems[itemIndex].quantity === 0) {
+        newCartItems.splice(itemIndex, 1);
+      }
     }
-    const updatedCart = await User.findOneAndUpdate(
+    user = await User.findOneAndUpdate(
       { _id: id },
       { cart: newCartItems },
       { new: true }
-    ).then((user) => user.cart);
+    );
+    const updatedCart = user.cart;
     return res
       .status(200)
       .json({ message: "user cart updated", cart: updatedCart });
@@ -60,25 +81,44 @@ const addToCart = async (req, res) => {
 
 const userOrders = async (req, res) => {
   try {
-    console.log(req.body);
     const id = req.body.id;
-    console.log(id);
     const user = await User.findOne({ _id: id });
-    console.log(user);
     if (user === null) {
-      return res.json(400).message({ message: "User doesn't exist." });
+      return res.status(400).message({ message: "User doesn't exist." });
     }
-    const orders = await order.findOne({ _id: id }).then((user) => user.orders);
+    const orders = await Order.find({ userId: id });
+    if (orders.length == 0) {
+      return res.status(200).json({ message: "No orders yet" });
+    }
     return res
-      .json(200)
-      .message({ message: "user orders fetched successfully", orders });
+      .status(200)
+      .json({ message: "user orders fetched successfully", orders });
   } catch (error) {
     return res.status(400).json({ message: "Failed to fetch user orders!" });
   }
 };
 
-const placeOrder = (req, res) => {
-  res.send("Order placed successfully");
+const placeOrder = async (req, res) => {
+  try {
+    const id = req.body.id;
+    const user = await User.findOne({ _id: id });
+    const userCart = user.cart;
+    const newOrder = new Order({
+      userId: id,
+      items: userCart,
+      vendorId: userCart[0].vendorId,
+    });
+    const order = await newOrder.save();
+    // Send an sms to vendor abt the order, send an order confirmation sms to the user
+    return res.status(200).json({
+      message:
+        "Your food items are ordered, you will be getting an sms shortly",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "Failed to order items, please try again",
+    });
+  }
 };
 
 export { viewCart, addToCart, userOrders, placeOrder };

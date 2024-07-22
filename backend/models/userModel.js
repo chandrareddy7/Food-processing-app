@@ -14,6 +14,11 @@ const cartItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  vendorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 const userSchema = new mongoose.Schema({
