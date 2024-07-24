@@ -1,0 +1,48 @@
+.footer{
+  padding: 20px 10%;
+  /* display: flex;
+  justify-content: space-around; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #F39300;
+}
+
+.footer a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  width: fit-content;
+}
+
+.footer .faq-links{
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .social-links{
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+  color: white;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer a:hover{
+  color: #F39300;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.footer .vendor-links{
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .social-icon:hover{
+  color: #F39300;
+  background-color: white;
+  transform: scale(1.1);
+  border-radius: 5px;
+}

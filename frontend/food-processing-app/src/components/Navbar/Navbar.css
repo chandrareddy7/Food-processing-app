@@ -1,0 +1,42 @@
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  height: 10vh;
+  padding: 0 10%;
+  gap: 5%;
+  font-size: 1.3rem;
+  background-color: #F39300;
+  color: white;
+}
+
+.navbar .links{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.links a{
+  text-decoration: none;
+  color: white;
+}
+
+.links a:hover{
+  text-decoration: underline;
+  color: white;
+}
+
+.navbar img{
+  max-height: 10vh;
+}
+
+.navbar .profile{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 10%;
+}
+
+.icon{
+  height: 30px;
+}
