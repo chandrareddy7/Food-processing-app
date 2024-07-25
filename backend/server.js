@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import checkRole from "./middleware/checkRole.js";
 import {
   userAuthRouter,
@@ -11,6 +12,7 @@ import connectDB from "./config/connectDB.js";
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 dotenv.config();
 
 const startServer = async () => {
