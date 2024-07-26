@@ -1,29 +1,21 @@
 import "./Menu.css";
-import appetizer from "../../assets/appetizer.jpg";
-
-const foodItemCategories = [
-  "Appetizer",
-  "Main Course",
-  "Dessert",
-  "Beverage",
-  "Other",
-  "Noodles",
-  "Rolls",
-];
+import { useState } from "react";
+import Scroll from "../Scroll/Scroll";
+import FoodItems from "../FoodItems/FoodItems";
 
 const Menu = () => {
+  const [category, setCategory] = useState("");
+  function scrollClickHandler(eventCategory) {
+    if (category === eventCategory) {
+      setCategory("");
+    } else {
+      setCategory(eventCategory);
+    }
+  }
   return (
     <div className="menu">
-      <div className="scrollbar">
-        {foodItemCategories.map((cat) => {
-          return (
-            <div className="fooditem-cat">
-              <img src={appetizer} alt="" />
-              <div className="label">{cat}</div>
-            </div>
-          );
-        })}
-      </div>
+      <Scroll category={category} scrollClickHandler={scrollClickHandler} />
+      <FoodItems category={category}/>
     </div>
   );
 };
