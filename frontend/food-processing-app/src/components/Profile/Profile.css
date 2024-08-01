@@ -1,0 +1,51 @@
+.profile-comp{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #F39300;
+  padding: 10px;
+  background-color: #F39300;
+  color: white;
+  border-radius: 10px;
+  /* width: max-content; */
+}
+
+.logout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 2px solid white;
+  background-color: #F39300;
+  border-radius: 4px;
+  color: white;
+  height: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout:hover{
+  background-color: white;
+  color: #F39300;
+}
+
+.orders{
+  text-decoration: none;
+  color: white;
+}
+
+.orders:hover{
+  color: #F39300;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.profile-comp > div{
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.profile-comp > div:hover{
+   color: #ff8c00;
+   background-color: white;
+}

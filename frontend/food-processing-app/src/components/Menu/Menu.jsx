@@ -2,6 +2,7 @@ import "./Menu.css";
 import { useState } from "react";
 import Scroll from "../Scroll/Scroll";
 import FoodItems from "../FoodItems/FoodItems";
+import { CartProvider } from "../../contexts/CartProvider";
 
 const Menu = () => {
   const [category, setCategory] = useState("");
@@ -13,9 +14,11 @@ const Menu = () => {
     }
   }
   return (
-    <div className="menu">
+    <div className="menu" id="menu">
       <Scroll category={category} scrollClickHandler={scrollClickHandler} />
-      <FoodItems category={category}/>
+      <CartProvider>
+        <FoodItems category={category} />
+      </CartProvider>
     </div>
   );
 };

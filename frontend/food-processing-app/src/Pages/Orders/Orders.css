@@ -1,0 +1,53 @@
+.orders-comp {
+  padding: 10% 0;
+  padding-top: 10vh;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.order-title{
+  font-weight: bolder;
+  font-size: 1.5rem;
+  color: #f39300;
+  margin: 10px;
+}
+
+.order-item{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-item .vendor{
+  color: #f39300;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+.orderItems{
+  display: none;
+}
+
+.orderItems.active{
+  display: flex;
+  flex-direction: column;
+}
+
+.order-items .total{
+  margin-right: 0;
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+  color: #f39300;
+}
+
+.order-foodItem{
+  display: flex;
+  justify-content: space-between;
+}

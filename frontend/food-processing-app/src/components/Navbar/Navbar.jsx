@@ -1,26 +1,37 @@
-import { IoSearchSharp } from "react-icons/io5";
-import { FaUser, FaShoppingCart } from "react-icons/fa";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "../../contexts/userContext";
+import Profile from "../Profile/Profile";
 
 const Navbar = () => {
+  const style = { color: "white" };
+  const user = useContext(userContext);
   return (
     <div className="navbar">
       <div className="links">
         <a href="/">Home</a>
-        <a href="#menu">Menu</a>
-        <a href="#contact-us">Contact Us</a>
+        <a href="/#menu">Menu</a>
+        <a href="/#footer">Contact Us</a>
       </div>
       <div className="logo">
         <img src="./src/assets/chef-logo.png" alt="chef" />
       </div>
       <div className="profile">
         <div className="cart icon">
-          <ShoppingCartIcon />
+          <Link to="/cart">
+            <ShoppingCartIcon style={style} />
+          </Link>
         </div>
         <div className="profile icon">
-          <PersonIcon />
+          <Link>
+            <PersonIcon style={style} />
+          </Link>
+          <div className="profilecomp">
+            <Profile />
+          </div>
         </div>
       </div>
     </div>

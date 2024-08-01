@@ -1,42 +1,64 @@
-.navbar{
+.navbar {
   display: flex;
   justify-content: space-between;
   height: 10vh;
   padding: 0 10%;
   gap: 5%;
   font-size: 1.3rem;
-  background-color: #F39300;
+  background-color: #f39300;
   color: white;
+  position: fixed;
+  width: 100vw;
+  z-index: 999;
+  margin-bottom: 100vh;
 }
 
-.navbar .links{
+.navbar .links {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 30%;
 }
 
-.links a{
+.links a {
   text-decoration: none;
   color: white;
 }
 
-.links a:hover{
+.links a:hover {
   text-decoration: underline;
   color: white;
 }
 
-.navbar img{
+.navbar img {
   max-height: 10vh;
 }
 
-.navbar .profile{
+.navbar .profile {
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 10%;
+  position: relative;
 }
 
-.icon{
+.icon {
   height: 30px;
+  color: white;
+}
+
+.profilecomp {
+  display: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.profile.icon:hover .profilecomp {
+  display: block;
+  position: absolute;
+  top: 5vh;
+  right: 0;
+  z-index: 10;
+  min-width: 75px;
 }
