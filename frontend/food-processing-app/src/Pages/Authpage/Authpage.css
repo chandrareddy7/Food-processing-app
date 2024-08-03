@@ -1,0 +1,101 @@
+.authpage {
+  padding-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  min-height: 90vh;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.3rem;
+}
+
+.signup.inactive,
+.signin.inactive {
+  display: none;
+}
+
+.signin.active,
+.signup.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup.active > *,
+.signin.active > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.button-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  border-radius: 40px;
+  outline: 2px solid #f39300;
+  background-color: rgb(234, 231, 231);
+  width: max-content;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  border-radius: 40px;
+  white-space: nowrap;
+  padding: 0 20px; 
+  text-align: center;
+}
+
+button.active {
+  color: #fff;
+  background-color: #f39300;
+}
+
+.slider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  /* height: 4px; */
+  background-color: #f39300;
+  transition: left 0.3s ease;
+}
+
+.signbtn{
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background-color: #f39300;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  border-radius: 40px;
+  white-space: nowrap;
+  padding: 10px 20px; 
+  text-align: center;
+}
+
+.signbtn:hover{
+  border: 1px solid #f39300;
+  color: #f39300;
+  background-color: white;
+}
+
+form > label{
+  color: #f39300;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}

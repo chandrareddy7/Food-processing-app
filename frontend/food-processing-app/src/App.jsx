@@ -1,6 +1,7 @@
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
+import Authpage from "./Pages/Authpage/Authpage";
 import Cart from "./Pages/Cart/Cart";
 import Home from "./Pages/Home/Home";
 import Orders from "./Pages/Orders/Orders";
@@ -12,7 +13,8 @@ function App() {
       <div className="app">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Authpage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
         </Routes>
