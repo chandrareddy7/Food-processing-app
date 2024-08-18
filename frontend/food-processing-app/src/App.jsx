@@ -13,8 +13,8 @@ function App() {
       <div className="app">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Authpage />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Authpage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
         </Routes>
@@ -23,5 +23,13 @@ function App() {
     </BrowserRouter>
   );
 }
+
+/**
+ * TODO: User should be directed to home page initially.
+ * If user tries to add items to cart check if they are logged in or not? prompt them for logging in.
+ * If user clicks on orders page or profile page check if they are logged in or not. prompt them for loggin in.
+ * Implement auth using jwt.
+ * After signup or signin redirect to home page.
+ */
 
 export default App;

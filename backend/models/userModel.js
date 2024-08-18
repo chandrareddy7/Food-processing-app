@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "vendor"],
     required: true,
   },
+  mobile: {
+    type: Number,
+    required: true,
+  },
   cart: [cartItemSchema],
 });
 

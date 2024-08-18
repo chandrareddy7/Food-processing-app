@@ -31,7 +31,7 @@ const FoodItems = ({ category }) => {
 
   useEffect(() => {
     axios
-      .get(`${BASE_API_URL}/fooditems`)
+      .get(`${BASE_API_URL}/fooditems`, {withCredentials: true})
       .then((data) => {
         return setFoodItemsList(data.data.foodItems);
       })
@@ -72,7 +72,7 @@ const FoodItems = ({ category }) => {
               </div>
             </div>
             <div className="name">{item.name}</div>
-            <div className="price">{item.price}</div>
+            <div className="price">$ {item.price}</div>
             <div className="description">{item.description}</div>
             <div className="vendor">Restuarant Name</div>
           </div>

@@ -2,7 +2,7 @@ import { User, Order } from "../models/models.js";
 
 const viewCart = async (req, res) => {
   try {
-    const id = req.body.userId;
+    const id = req.user.userId;
     const userExists = await User.findOne({ _id: id });
     if (userExists.length == 0) {
       return res.status(400).json({ message: "user doesn't exist" });
@@ -18,7 +18,8 @@ const viewCart = async (req, res) => {
 
 const addToCart = async (req, res) => {
   try {
-    const { id, vendorId, foodItem, quantity, price } = req.body;
+    const id = req.user.userId;
+    const { vendorId, foodItem, quantity, price } = req.body;
     let user = await User.findOne({ _id: id });
     if (!user) {
       return res.status(400).json({ message: "user doesn't exist" });
@@ -81,7 +82,7 @@ const addToCart = async (req, res) => {
 
 const userOrders = async (req, res) => {
   try {
-    const id = req.body.id;
+    const id = req.user.userId;
     const user = await User.findOne({ _id: id });
     if (user === null) {
       return res.status(400).message({ message: "User doesn't exist." });
@@ -100,7 +101,7 @@ const userOrders = async (req, res) => {
 
 const placeOrder = async (req, res) => {
   try {
-    const id = req.body.id;
+    const id = req.user.userId;
     const user = await User.findOne({ _id: id });
     const userCart = user.cart;
     const newOrder = new Order({

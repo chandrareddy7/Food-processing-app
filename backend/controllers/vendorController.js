@@ -1,7 +1,8 @@
 import { Order, foodItem } from "../models/models.js";
 
 const addFoodItem = async (req, res) => {
-  const newfoodItem = new foodItem({ ...req.body });
+  const id = req.user.userId;
+  const newfoodItem = new foodItem({ ...req.body, vendorId: id });
   try {
     await newfoodItem.save();
     return res.status(200).json({ message: "Food item saved" });
@@ -13,9 +14,8 @@ const addFoodItem = async (req, res) => {
 };
 
 const deleteFoodItem = async (req, res) => {
-  res.send("Food item deleted");
   const reqfoodItemId = req.body.itemId;
-  const reqvendorId = req.body.vendorId;
+  const reqvendorId = req.user.userId;
   try {
     const itemExists = await foodItem.find({
       vendorId: reqvendorId,
@@ -28,6 +28,7 @@ const deleteFoodItem = async (req, res) => {
       vendorId: reqvendorId,
       _id: reqfoodItemId,
     });
+  return res.send("Food item deleted");
   } catch (error) {
     return res.status(400).json({ message: "Cannot delete food item!" });
   }
@@ -35,7 +36,7 @@ const deleteFoodItem = async (req, res) => {
 
 const viewOrders = async (req, res) => {
   try {
-    const id = req.body.id;
+    const id = req.user.userId;
     const vendorOrders = await Order.find({ vendorId: id });
     return res.status(200).json({
       message: "Vendor orders fetched successfully",
@@ -48,7 +49,8 @@ const viewOrders = async (req, res) => {
 
 const updateOrderStatus = async (req, res) => {
   try {
-    const { id, orderId, status } = { ...req.body };
+    const id = req.user.userId;
+    const { orderId, status } = { ...req.body };
     const vendorOrders = await Order.findOneAndUpdate(
       { vendorId: id, orderId: orderId },
       { status: status },
