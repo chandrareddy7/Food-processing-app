@@ -18,7 +18,6 @@ const signupUser = async (req, res) => {
     await newUser.save();
     res.status(201).json({ message: "Sign up successful!" });
   } catch (error) {
-    // res.json({ message: "User signup failed, Please try again", error: error });
     res.status(500).json({ message: "User signup failed, Please try again" });
   }
 };

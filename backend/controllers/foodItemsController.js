@@ -9,4 +9,14 @@ const getAllFoodItems = async (req, res) => {
   }
 };
 
-export { getAllFoodItems };
+const getFoodItemById = async (req, res) => {
+  try {
+    const foodItem = await foodItem.find({_id: req.body.id});
+    console.log(foodItem);
+    res.status(200).json({ foodItems });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to Add food Items" });
+  }
+};
+
+export { getAllFoodItems, getFoodItemById };

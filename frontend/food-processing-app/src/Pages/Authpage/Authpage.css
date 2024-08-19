@@ -2,7 +2,6 @@
   padding-top: 20vh;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   min-height: 90vh;
   align-items: center;
   gap: 20px;
@@ -92,7 +91,7 @@ button.active {
   background-color: white;
 }
 
-form > label{
+.form > label{
   color: #f39300;
   width: 100%;
   display: flex;

@@ -89,7 +89,7 @@ const Authpage = () => {
           activeButton === "signUp" ? "active" : "inactive"
         }`}
       >
-        <form onSubmit={submitHandler}>
+        <form className="form" onSubmit={submitHandler}>
           <label htmlFor="name">
             {" "}
             Name
@@ -129,7 +129,7 @@ const Authpage = () => {
           activeButton === "signIn" ? "active" : "inactive"
         }`}
       >
-        <form onSubmit={submitHandler}>
+        <form className="form"  onSubmit={submitHandler}>
           <label htmlFor="signin-email">
             {" "}
             Email

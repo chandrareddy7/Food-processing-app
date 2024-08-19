@@ -30,14 +30,10 @@
 }
 
 .orders{
+  width: max-content;
+  display: block;
   text-decoration: none;
   color: white;
-}
-
-.orders:hover{
-  color: #F39300;
-  background-color: white;
-  border-radius: 4px;
 }
 
 .profile-comp > div{
@@ -45,7 +41,8 @@
   border-radius: 4px;
 }
 
-.profile-comp > div:hover{
-   color: #ff8c00;
-   background-color: white;
+.logged-in{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

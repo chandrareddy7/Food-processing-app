@@ -5,13 +5,13 @@ const foodItemCategories = [
   "Main Course",
   "Dessert",
   "Beverage",
-  "Other",
   "Noodles",
   "Rolls",
   "Salads",
   "Soups",
   "Beverages",
   "Specials",
+  "Other",
 ];
 
 const foodItemSchema = new mongoose.Schema({

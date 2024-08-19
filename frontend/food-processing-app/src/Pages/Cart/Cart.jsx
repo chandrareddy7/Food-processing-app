@@ -6,7 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
 const Cart = () => {
-  const { cartItems, dispatch } = useContext(userContext);
+  const { userData, dispatch } = useContext(userContext);
   const [bill, setBill] = useState({
     totalCost: 0,
     totalCount: 0,
@@ -16,7 +16,6 @@ const Cart = () => {
       type: "add",
       id: fooditemId,
     });
-    console.log(fooditemId);
   };
 
   const removeFoodItem = (fooditemId) => {
@@ -24,21 +23,20 @@ const Cart = () => {
       type: "remove",
       id: fooditemId,
     });
-    console.log(fooditemId);
   };
   useEffect(() => {
     let total = { totalCost: 0, totalCount: 0 };
-    cartItems.cart.forEach((element) => {
+    userData.cart.forEach((element) => {
       total.totalCost += element.price * element.count;
       total.totalCount += element.count;
     });
     setBill(total);
-  }, [cartItems]);
+  }, [userData]);
   return (
     <div className="cart-component">
       <div className="heading">Cart Items</div>
       <div className="cart-items">
-        {cartItems.cart.map((item, index) => {
+        {userData.cart.map((item, index) => {
           return (
             <div key={index}>
               <div className="cart-item">

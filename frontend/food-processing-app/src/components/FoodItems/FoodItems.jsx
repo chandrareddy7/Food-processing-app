@@ -14,7 +14,7 @@ const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
 const FoodItems = ({ category }) => {
   const [foodItemsList, setFoodItemsList] = useState([]);
-  const [cartItems, dispatch] = useReducer(cartReducer, initialState);
+  const [userData, dispatch] = useReducer(cartReducer, initialState);
   const addFoodItem = (fooditemId) => {
     dispatch({
       type: "add",
@@ -39,7 +39,7 @@ const FoodItems = ({ category }) => {
   }, []);
 
   const getItemCount = (fooditemId) => {
-    const item = cartItems.cart.find((cartItem) => cartItem._id === fooditemId);
+    const item = userData.cart.find((cartItem) => cartItem._id === fooditemId);
     return item ? item.count : 0;
   };
 
