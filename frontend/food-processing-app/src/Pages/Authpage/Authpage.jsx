@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import "./Authpage.css";
-import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../../contexts/userContext";
 
 const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
 const Authpage = () => {
+  const { userData, dispatch } = useContext(userContext);
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("signIn");
 
   const handleButtonClick = (button) => {
@@ -16,47 +20,73 @@ const Authpage = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     const form = event.target;
-    if(activeButton === 'signUp'){
+    if (activeButton === "signUp") {
       const formData = new FormData(form);
-      const name = formData.get("name")
-      const email = formData.get("email")
-      const mobile = formData.get("mobilenumber")
-      const password = formData.get("password")
-      
-      await axios.post(`${BASE_API_URL}/auth/signup`, {
-        name, email, mobile, password
-      }).then((response) => {
-        // Store server sent jwt token in httponly cookie
-        notify("success", response.data);
-      }).catch((error)=>{
-        notify("error", error.response.data.message)
-      })
-    }
-    else if(activeButton === 'signIn'){
-      const formData = new FormData(form);
-      const email = formData.get("email")
-      const password = formData.get("password")
-      await axios.post(`${BASE_API_URL}/auth/signin`,{
-        email, password
-      }).then((response) => {
-                // Store server sent jwt token in httponly cookie
-        notify("success", response.data.message)
-      }).catch((error) => {
-        notify("error", error.response.data.message)
-      })
-    }
-  }
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const mobile = formData.get("mobilenumber");
+      const password = formData.get("password");
+      const roles = formData.get("role")
 
-  const notify = (type,message) => {
-    switch(type){
-      case 'success':
+      await axios
+        .post(`${BASE_API_URL}/auth/signup`, {
+          name,
+          email,
+          mobile,
+          password,
+          roles
+        })
+        .then((response) => {
+          notify("success", "Signed up successfully, please sign in now!");
+        })
+        .catch((error) => {
+          notify("error", error.response.data.message);
+        });
+    } else if (activeButton === "signIn") {
+      const formData = new FormData(form);
+      const email = formData.get("email");
+      const password = formData.get("password");
+      await axios
+        .post(`${BASE_API_URL}/auth/signin`, {
+          email,
+          password,
+        })
+        .then((response) => {
+          dispatch({ type: "userLoggedIn" });
+          notify("success", "Logged in Successfully! Redirecting to home page");
+        })
+        .then((response) => {
+          console.log(`${BASE_API_URL}/user/cart`);
+          const cartResponse = axios.get(`${BASE_API_URL}/user/cart`, {
+            withCredentials: true,
+          });
+          if (cartResponse.data) {
+            dispatch({
+              type: "updateCart",
+              payload: cartResponse.data,
+            });
+          }
+          setTimeout(() => navigate("/"), 2000);
+        })
+        .catch((error) => {
+          notify(
+            "error",
+            "Couldn't login please check credentials and try again!"
+          );
+        });
+    }
+  };
+
+  const notify = (type, message) => {
+    switch (type) {
+      case "success":
         return toast.success(message);
-      case 'error':
+      case "error":
         return toast.error(message);
-      case 'default':
+      case "default":
         return toast("No response from backend, Please try again!");
     }
-  }
+  };
 
   return (
     <div className="authpage">
@@ -111,6 +141,14 @@ const Authpage = () => {
               minLength={10}
             />
           </label>
+          <label htmlFor="roles">
+            {" "}
+            Role
+            <select name="role" id="roles">
+              <option value="user">User</option>
+              <option value="vendor">Vendor</option>
+            </select>
+          </label>
           <label htmlFor="signup-password">
             {" "}
             Password
@@ -121,7 +159,9 @@ const Authpage = () => {
               minLength={8}
             />
           </label>
-          <button type="submit" className="signbtn" >Sign Up</button>
+          <button type="submit" className="signbtn">
+            Sign Up
+          </button>
         </form>
       </div>
       <div
@@ -129,7 +169,7 @@ const Authpage = () => {
           activeButton === "signIn" ? "active" : "inactive"
         }`}
       >
-        <form className="form"  onSubmit={submitHandler}>
+        <form className="form" onSubmit={submitHandler}>
           <label htmlFor="signin-email">
             {" "}
             Email
@@ -145,7 +185,9 @@ const Authpage = () => {
               minLength={8}
             />
           </label>
-          <button type="submit" className="signbtn" >Sign In</button>
+          <button type="submit" className="signbtn">
+            Sign In
+          </button>
         </form>
       </div>
     </div>

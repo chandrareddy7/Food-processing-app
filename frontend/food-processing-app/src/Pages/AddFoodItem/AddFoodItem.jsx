@@ -1,28 +1,56 @@
 import React from "react";
 import "./AddFoodItem.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
-
 const AddFoodItem = () => {
+  const notify = (type, message) => {
+    switch (type) {
+      case "success":
+        return toast.success(message);
+      case "error":
+        return toast.error(message);
+      case "default":
+        return toast("No response from backend, Please try again!");
+    }
+  };
   const submitHandler = async (event) => {
-  event.preventDefault();
-  const formData = new FormData(form);
-  const name = formData.get("name")
-  const description = formData.get("description")
-  const price = formData.get("price")
-  const category = formData.get("category")
-  const newFoodItem = await axios.post(`${BASE_API_URL}/vendor/fooditems`, {
-    name, description, price, category
-  });
-  if(newFoodItem){
-    // TODO: Add a toast and reset the form
-  }else{
-    // TODO: Error toast and request to try again
-  }
-  }
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const description = formData.get("description");
+    const price = formData.get("price");
+    const category = formData.get("category");
+    const newFoodItem = await axios.post(
+      `${BASE_API_URL}/vendor/fooditems`,
+      {
+        name,
+        description,
+        price,
+        category,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (newFoodItem) {
+      notify("success", "Added food Item");
+      // TODO: Add a toast and reset the form
+    } else {
+      notify("error", "Couldn't add food item please try again");
+      // TODO: Error toast and request to try again
+    }
+  };
   return (
     <div className="addfooditem">
+      <ToastContainer />
       <div className="title">Add a new Food Item... </div>
       <form onSubmit={submitHandler} className="addfooditem-form">
         <label htmlFor="name">
@@ -62,7 +90,9 @@ const AddFoodItem = () => {
           Image of the dish
           <input type="file" name="image" id="image" accept="png/jpeg" />
         </label>
-        <button type="submit" className="addfoodbtn">Add Food Item</button>
+        <button type="submit" className="addfoodbtn">
+          Add Food Item
+        </button>
       </form>
     </div>
   );

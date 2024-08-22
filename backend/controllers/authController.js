@@ -35,13 +35,15 @@ const signinUser = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Authentication failed' });
     }
+    
     const token = jwt.sign({ userId: user._id, role: user.roles }, process.env.JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 900000,
+      path: "/",
+      maxAge: 900000000,
     });
     return res.status(200).json({ message: "Login successfull" });
   } catch (error) {

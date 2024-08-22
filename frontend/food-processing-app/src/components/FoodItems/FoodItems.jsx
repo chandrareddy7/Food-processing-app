@@ -14,9 +14,9 @@ const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
 const FoodItems = ({ category }) => {
   const [foodItemsList, setFoodItemsList] = useState([]);
-  const [userData, dispatch] = useReducer(cartReducer, initialState);
+  const {userData, dispatch} = useContext(userContext);
   const addFoodItem = (fooditemId) => {
-    dispatch({
+    dispatch({ 
       type: "add",
       id: fooditemId,
     });
