@@ -52,11 +52,13 @@ const Authpage = () => {
           password,
         })
         .then((response) => {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('userRole', response.data.role);
           dispatch({ type: "userLoggedIn" });
           notify("success", "Logged in Successfully! Redirecting to home page");
         })
         .then((response) => {
-          console.log(`${BASE_API_URL}/user/cart`);
           const cartResponse = axios.get(`${BASE_API_URL}/user/cart`, {
             withCredentials: true,
           });

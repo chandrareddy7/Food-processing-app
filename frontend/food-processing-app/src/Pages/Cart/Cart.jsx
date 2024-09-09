@@ -4,8 +4,28 @@ import { userContext } from "../../contexts/userContext";
 import foodimage from "../../assets/appetizer.jpg";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+
+const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+const VITE_REACT_STRIPE_PUB_KEY = import.meta.env.VITE_REACT_STRIPE_PUB_KEY;
 
 const Cart = () => {
+  const makePayment = async () => {
+    const stripe = await loadStripe(VITE_REACT_STRIPE_PUB_KEY);
+    const body = { products: userData.cart };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const response = await axios.post(`${BASE_API_URL}/checkout-session`, body);
+    const session = await response.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+    if (result.error) {
+      console.log(result.error);
+    }
+  };
   const { userData, dispatch } = useContext(userContext);
   const [bill, setBill] = useState({
     totalCost: 0,
@@ -77,7 +97,7 @@ const Cart = () => {
         <div className="totalCost">
           <div className="title">Total Cost</div>$ {bill.totalCost}
         </div>
-        <div className="checkoutbutton">
+        <div className="checkoutbutton" onClick={makePayment}>
           <button type="submit">Place Order</button>
         </div>
       </div>

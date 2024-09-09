@@ -14,7 +14,7 @@ const signupUser = async (req, res) => {
         .json({ message: "Email already in use, please use a new email" });
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newUser = await new User({ name: req.body.name, email: req.body.email, roles: req.body.roles , password: hashedPassword, mobile: req.body.mobile });
+    const newUser = await new User({ name: req.body.name, email: req.body.email, roles: req.body.roles, password: hashedPassword, mobile: req.body.mobile });
     await newUser.save();
     res.status(201).json({ message: "Sign up successful!" });
   } catch (error) {
@@ -35,17 +35,19 @@ const signinUser = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Authentication failed' });
     }
-    
+
     const token = jwt.sign({ userId: user._id, role: user.roles }, process.env.JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: "/",
-      maxAge: 900000000,
-    });
-    return res.status(200).json({ message: "Login successfull" });
+    // res.cookie('token', token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   sameSite: 'none',
+    //   path: "/",
+    //   maxAge: 900000000,
+    // });
+
+    return res.status(200).json({ message: "Login successfull", token: token, userId: user._id, role: user.roles });
   } catch (error) {
     return res.status(403).json({ message: "Wrong credentials, please check" });
   }

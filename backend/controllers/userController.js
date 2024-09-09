@@ -28,19 +28,11 @@ const addToCart = async (req, res) => {
     const itemIndex = cartItems.findIndex((item) => {
       return item.foodItemId.equals(foodItem);
     });
-    if (cartItems.length != 0) {
-      if (cartItems[0].vendorId != vendorId) {
-        return res.status(400).json({
-          message:
-            "Please add items from the same vendor to your cart, or clear your cart before adding items from a new vendor.",
-        });
-      }
-    }
     let newCartItems;
     if (itemIndex === -1) {
       if (quantity < 0) {
         return res.status(400).json({
-          message: "Cannot remove an item which is not added to cart before.",
+          message: "Cannot remove an item which is not added to cart.",
         });
       }
       newCartItems = [

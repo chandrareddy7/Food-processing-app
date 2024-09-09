@@ -3,9 +3,8 @@ import jwt from "jsonwebtoken"
 export default function authandcheckRole(role) {
   return function (req, res, next) {
     const token = req.cookies.token;
-    console.log(req.headers);
+    console.log(req.headers['authorization']);
     
-    console.log(token);
     
     if (!token) {
       return res.status(401).json({ message: "Please signin to view this page" });
